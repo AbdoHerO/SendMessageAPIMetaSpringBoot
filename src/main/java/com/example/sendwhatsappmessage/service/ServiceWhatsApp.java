@@ -255,6 +255,25 @@ public class ServiceWhatsApp {
         }
     }
 
+
+    public List<MessageResult> sendBatchDynamicTemplateMessages(List<WhatsAppDynamicTemplateRequest> requests) {
+        return requests.stream()
+                .map(request -> {
+                    MessageResult result = new MessageResult();
+                    result.setTo(request.getTo());
+                    try {
+                        String apiResponse = sendDynamicTemplateMessage(request);
+                        result.setStatus("SUCCESS");
+                        result.setDetails(apiResponse);
+                    } catch (Exception e) {
+                        result.setStatus("FAILED");
+                        result.setDetails(e.getMessage());
+                    }
+                    return result;
+                })
+                .collect(Collectors.toList());
+    }
+
 //    @Async
 //    public Future<Boolean> sendNotificationWhatsApp(Notification notification) {
 //        try {

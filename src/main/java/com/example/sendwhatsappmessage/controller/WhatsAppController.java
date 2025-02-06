@@ -1,14 +1,12 @@
 package com.example.sendwhatsappmessage.controller;
 
-import com.example.sendwhatsappmessage.dto.WhatsAppDynamicTemplateRequest;
-import com.example.sendwhatsappmessage.dto.WhatsAppSendRequestTemplate;
+import com.example.sendwhatsappmessage.dto.*;
 //import com.example.sendwhatsappmessage.model.Notification;
-import com.example.sendwhatsappmessage.dto.WhatsAppSendRequestTemplateConfirmation;
-import com.example.sendwhatsappmessage.dto.WhatsAppSendRequestText;
 import com.example.sendwhatsappmessage.service.ServiceWhatsApp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Future;
 
@@ -69,6 +67,11 @@ public class WhatsAppController {
     @PostMapping("/sendDynamicTemplateMessage")
     public String sendDynamicTemplateMessage(@RequestBody WhatsAppDynamicTemplateRequest request) {
         return serviceWhatsApp.sendDynamicTemplateMessage(request);
+    }
+
+    @PostMapping("/sendBatchDynamicTemplateMessages")
+    public List<MessageResult> sendBatchDynamicTemplateMessages(@RequestBody WhatsAppBatchRequest batchRequest) {
+        return serviceWhatsApp.sendBatchDynamicTemplateMessages(batchRequest.getMessages());
     }
 
 //    @PostMapping("/sendNotification")
